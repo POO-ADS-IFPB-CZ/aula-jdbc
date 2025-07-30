@@ -18,8 +18,8 @@ public class ConnectionFactory {
         Properties props = new Properties();
         FileReader reader = new FileReader("database.properties");
         props.load(reader);
-        System.out.println(props);
 
+        //Fazendo a conexão
         Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(
                 props.getProperty("url"),
