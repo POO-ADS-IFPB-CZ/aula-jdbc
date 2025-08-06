@@ -3,6 +3,7 @@ import database.ConnectionFactory;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Main {
@@ -11,13 +12,15 @@ public class Main {
         ConnectionFactory factory = new ConnectionFactory();
         try {
             Connection con = factory.getConnection();
-            PreparedStatement statement = con.prepareStatement(
-            "INSERT INTO aluno (matricula,nome,email) VALUES (?,?,?)");
-            statement.setString(1, "202112010001");
-            statement.setString(2, "Maria");
-            statement.setString(3, "maria@gmail.com");
-            if(statement.executeUpdate()>0){
-                System.out.println("Salvo com sucesso!");
+            PreparedStatement stmt = con.prepareStatement(
+                "SELECT * FROM aluno"
+            );
+            ResultSet rs = stmt.executeQuery();
+              while(rs.next()){
+                String matricula = rs.getString("matricula");
+                String nome = rs.getString(2);
+                String email = rs.getString("email");
+                System.out.println(matricula + ", " + nome + ", "+ email);
             }
         } catch (IOException e) {
             //Problema no arquivo de propriedades
