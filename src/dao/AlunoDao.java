@@ -14,8 +14,19 @@ import java.util.List;
 public class AlunoDao implements Dao<Aluno>{
 
     @Override
-    public boolean salvar(Aluno objeto) {
-        return false;
+    public boolean salvar(Aluno objeto) throws SQLException, 
+            IOException, ClassNotFoundException {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        try (Connection con = connectionFactory.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(
+                    "INSERT INTO aluno (matricula, nome, email)" +
+                            "VALUES (?,?,?)"
+            );
+            pstmt.setString(1, objeto.getMatricula());
+            pstmt.setString(2, objeto.getNome());
+            pstmt.setString(3, objeto.getEmail());
+            return pstmt.executeUpdate() > 0;
+        }
     }
 
     @Override
