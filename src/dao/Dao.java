@@ -1,5 +1,7 @@
 package dao;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface Dao<T> {
@@ -7,6 +9,6 @@ public interface Dao<T> {
     boolean salvar(T objeto);
     boolean atualizar(T objeto);
     boolean deletar(T objeto);
-    List<T> listar();
+    List<T> listar() throws SQLException, IOException, ClassNotFoundException;
 
 }

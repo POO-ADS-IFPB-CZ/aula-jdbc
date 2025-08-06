@@ -1,10 +1,18 @@
 package dao;
 
+import database.ConnectionFactory;
 import model.Aluno;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoDao implements Dao<Aluno>{
+
     @Override
     public boolean salvar(Aluno objeto) {
         return false;
@@ -21,7 +29,22 @@ public class AlunoDao implements Dao<Aluno>{
     }
 
     @Override
-    public List<Aluno> listar() {
-        return List.of();
+    public List<Aluno> listar() throws SQLException, IOException,
+            ClassNotFoundException {
+        List<Aluno> alunos = new ArrayList<>();
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        try(Connection connection = connectionFactory.getConnection()){
+            PreparedStatement pstmt = connection.prepareStatement(
+                    "SELECT * FROM aluno");
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                String matricula = rs.getString("matricula");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                Aluno aluno = new Aluno(matricula, nome, email);
+                alunos.add(aluno);
+            }
+        }
+        return alunos;
     }
 }
