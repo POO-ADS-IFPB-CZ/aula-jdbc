@@ -13,10 +13,15 @@ import java.util.List;
 
 public class AlunoDao implements Dao<Aluno>{
 
+    private ConnectionFactory connectionFactory;
+
+    public AlunoDao(){
+        connectionFactory = new ConnectionFactory();
+    }
+
     @Override
     public boolean salvar(Aluno objeto) throws SQLException, 
             IOException, ClassNotFoundException {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
         try (Connection con = connectionFactory.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(
                     "INSERT INTO aluno (matricula, nome, email)" +
@@ -32,7 +37,6 @@ public class AlunoDao implements Dao<Aluno>{
     @Override
     public boolean atualizar(Aluno objeto) throws SQLException,
             IOException, ClassNotFoundException {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
         try (Connection con = connectionFactory.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(
                     "UPDATE aluno SET nome=?, email=? " +
@@ -47,7 +51,6 @@ public class AlunoDao implements Dao<Aluno>{
 
     @Override
     public boolean deletar(Aluno objeto) throws SQLException, IOException, ClassNotFoundException {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
         try (Connection con = connectionFactory.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(
                     "DELETE FROM aluno WHERE matricula = ?"
@@ -61,7 +64,6 @@ public class AlunoDao implements Dao<Aluno>{
     public List<Aluno> listar() throws SQLException, IOException,
             ClassNotFoundException {
         List<Aluno> alunos = new ArrayList<>();
-        ConnectionFactory connectionFactory = new ConnectionFactory();
         try(Connection connection = connectionFactory.getConnection()){
             PreparedStatement pstmt = connection.prepareStatement(
                     "SELECT * FROM aluno");
