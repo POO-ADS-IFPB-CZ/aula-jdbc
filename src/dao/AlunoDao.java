@@ -35,8 +35,15 @@ public class AlunoDao implements Dao<Aluno>{
     }
 
     @Override
-    public boolean deletar(Aluno objeto) {
-        return false;
+    public boolean deletar(Aluno objeto) throws SQLException, IOException, ClassNotFoundException {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        try (Connection con = connectionFactory.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(
+                    "DELETE FROM aluno WHERE matricula = ?"
+            );
+            pstmt.setString(1, objeto.getMatricula());
+            return pstmt.executeUpdate() > 0;
+        }
     }
 
     @Override

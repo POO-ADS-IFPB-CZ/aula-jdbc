@@ -10,7 +10,7 @@ public class Main {
 
         AlunoDao alunoDao = new AlunoDao();
         try {
-            alunoDao.salvar(
+            alunoDao.deletar(
                     new Aluno("202012010003", "Pedro",
                             "pedro@gmail.com")
             );
