@@ -30,8 +30,19 @@ public class AlunoDao implements Dao<Aluno>{
     }
 
     @Override
-    public boolean atualizar(Aluno objeto) {
-        return false;
+    public boolean atualizar(Aluno objeto) throws SQLException,
+            IOException, ClassNotFoundException {
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        try (Connection con = connectionFactory.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(
+                    "UPDATE aluno SET nome=?, email=? " +
+                            "WHERE matricula = ?"
+            );
+            pstmt.setString(1, objeto.getNome());
+            pstmt.setString(2, objeto.getEmail());
+            pstmt.setString(3, objeto.getMatricula());
+            return pstmt.executeUpdate() > 0;
+        }
     }
 
     @Override

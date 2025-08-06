@@ -7,7 +7,7 @@ import java.util.List;
 public interface Dao<T> {
 
     boolean salvar(T objeto) throws SQLException, IOException, ClassNotFoundException;
-    boolean atualizar(T objeto);
+    boolean atualizar(T objeto) throws SQLException, IOException, ClassNotFoundException;
     boolean deletar(T objeto) throws SQLException, IOException, ClassNotFoundException;
     List<T> listar() throws SQLException, IOException, ClassNotFoundException;
 

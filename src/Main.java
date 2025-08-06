@@ -10,9 +10,9 @@ public class Main {
 
         AlunoDao alunoDao = new AlunoDao();
         try {
-            alunoDao.deletar(
-                    new Aluno("202012010003", "Pedro",
-                            "pedro@gmail.com")
+            alunoDao.atualizar(
+                    new Aluno("202012010001", "João da Silva",
+                            "joao@gmail.com")
             );
         } catch (SQLException e) {
             throw new RuntimeException(e);
